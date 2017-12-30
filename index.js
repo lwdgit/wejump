@@ -13,10 +13,10 @@ function sleep (ms) {
 
 async function start() {
   var devices = await client.listDevices()
-  assert(devices && devices.length, '没有检测到手机')
+  assert(devices && devices.length, '没有检测到安卓设备')
   var deviceId = devices[0].id
   while (1) {
-    await sleep((Math.random() * 200) + 2500)
+    await sleep((Math.random() * 200) + 3000)
     var stream = await client.screencap(deviceId)
     var im = await parseStream(stream)
     var [piece_x, piece_y, board_x, board_y] = find_piece_and_board(im)
@@ -67,6 +67,7 @@ function jump(deviceId, distance) {
   print(new Date() + ' press_time: ' + str(press_time))
   press_time = int(press_time)
   if (press_time > 300 || old === press_time) {
+    old = 1
     client.shell(deviceId, 'input swipe 320 410 320 410 ' + str(press_time))
   } else {
     old = press_time

@@ -16,7 +16,7 @@ async function start() {
   assert(devices && devices.length, '没有检测到手机')
   var deviceId = devices[0].id
   while (1) {
-    await sleep((Math.random() * 2000) + 2000)
+    await sleep((Math.random() * 200) + 2500)
     var stream = await client.screencap(deviceId)
     var im = await parseStream(stream)
     var [piece_x, piece_y, board_x, board_y] = find_piece_and_board(im)
@@ -64,7 +64,7 @@ function jump(deviceId, distance) {
   var press_time = distance * 1.450
   print(new Date() + ' press_time: ' + str(press_time))
   press_time = int(press_time)
-  if (press_time > 200) {
+  if (press_time > 300) {
     client.shell(deviceId, 'input swipe 320 410 320 410 ' + str(press_time))
   }
 }

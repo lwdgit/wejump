@@ -1,6 +1,6 @@
 # node 版本的 微信自动跳一跳
 
-基于 https://github.com/wangshub/wechat_jump_game python版本改写。仅支持安卓手机
+基于 https://github.com/wangshub/wechat_jump_game python版本改写。仅支持安卓设备。
 
 无需安装 adb ，速度比 python 快。
 

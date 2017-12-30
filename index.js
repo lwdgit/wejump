@@ -60,12 +60,16 @@ function str (num) {
 function int (str) {
   return parseInt(str, 10)
 }
+
+var old = 1
 function jump(deviceId, distance) {
   var press_time = distance * 1.450
   print(new Date() + ' press_time: ' + str(press_time))
   press_time = int(press_time)
-  if (press_time > 300) {
+  if (press_time > 300 || old === press_time) {
     client.shell(deviceId, 'input swipe 320 410 320 410 ' + str(press_time))
+  } else {
+    old = press_time
   }
 }
 
@@ -100,7 +104,7 @@ function find_piece_and_board(im) {
 
   for (var i of range(h)) {
     for (var j of range(w)) {
-      pixel = im.getpixel(j, i)
+      var pixel = im.getpixel(j, i)
       // 根据棋子的最低行的颜色判断，找最后一行那些点的平均值
       // print(pixel[0])
       if ((pixel[0] > 50 && pixel[0] < 60) && (pixel[1] > 53 && pixel[1] < 63) && (pixel[2] > 95 && pixel[2] < 110)) {
@@ -113,15 +117,15 @@ function find_piece_and_board(im) {
   if (!all([piece_x_sum, piece_x_c])) {
     return [0, 0, 0, 0]
   }
-  piece_x = piece_x_sum / piece_x_c
+  var piece_x = piece_x_sum / piece_x_c
   // TODO: 大小根据截图的 size 来计算
-  piece_y = piece_y_max - 20  // 上移棋子底盘高度的一半
+  var piece_y = piece_y_max - 20  // 上移棋子底盘高度的一半
 
   for (var i of range(h)) {
     if (i < 300) {
       continue
     }
-    last_pixel = im.getpixel(0, i)
+    var last_pixel = im.getpixel(0, i)
     if (board_x || board_y) {
       break
     }
@@ -130,7 +134,7 @@ function find_piece_and_board(im) {
 
 
     for (var j of range(w)) {
-      pixel = im.getpixel(j, i)
+      var pixel = im.getpixel(j, i)
       // 修掉脑袋比下一个小格子还高的情况的 bug
       if (abs(j - piece_x) < 70) {
         continue

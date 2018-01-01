@@ -67,7 +67,7 @@ function int (str) {
 
 function jump(deviceId, distance) {
   var press_time = distance * 1.40
-  var offset = press_time < 220 ? 0 : 40 / press_time
+  var offset = 40 / press_time
   print(new Date() + ' press_time: ' + str(press_time) + ' ' + offset)
   return client.shell(deviceId, 'input swipe 320 410 320 410 ' + Math.round(press_time * (1 + offset)))
 }
